@@ -10,6 +10,10 @@
  */
 var chokidar = require('chokidar');
 var scp = require('scp');
+var SSH = require('simple-ssh');
+var exec = require('ssh-exec');
+var fs = require('fs');
+var jsesc = require('jsesc');
 
 /*****************************************
  * vars
@@ -50,7 +54,7 @@ transfer('.');
  * transfer function
  */
 function transfer(filepath) {
-  log('transfer: ', filepath);
+  // log('transfer: ', filepath);
 
   if (filepath === '') {
     filepath = '.';
@@ -60,9 +64,17 @@ function transfer(filepath) {
     user: 'root',
     host: 'wifibox',
     port: '22',
-    file: '"' + rootpath.local + filepath + '"',
-    path: '"' + rootpath.remote + filepath + '"'
+    file: jsesc(rootpath.local + filepath, {
+      'quotes': 'double',
+      'wrap': true
+    }),
+    path: jsesc(rootpath.remote + filepath, {
+      'quotes': 'double',
+      'wrap': true
+    })
   }
+
+  log(options);
 
   scp.send(options, function (err) {
     if (err) console.log('Transfer error: ' + err);
@@ -71,29 +83,88 @@ function transfer(filepath) {
 }
 
 /*****************************************
+ * transfer function
+ */
+function remove(filepath) {
+  //  log('remove: ', filepath);
+
+  var remotepath = jsesc(rootpath.remote + filepath, {
+    'quotes': 'double',
+    'wrap': true
+  });
+  var cmd = 'rm -r ' + remotepath;
+  log('remove cmd: ', cmd);
+
+  var rm = exec(cmd, {
+    user: 'root',
+    host: '192.168.5.1'
+  }).pipe(process.stdout)
+
+  rm.on('end', function() {
+    console.log('rm end');
+  });
+  rm.on('error', function(err) {
+    console.log('rm err: ', err);
+  });
+
+  //--also working alternative:
+  // var ssh = new SSH({
+  //     host: '192.168.5.1',
+  //     user: 'root',
+  //     agent: process.env.SSH_AUTH_SOCK,
+  //     agentForward: true
+  // });
+  //
+  // ssh.exec('rm -r ' + remotepath, {
+  //   out: function(stdout) {
+  //     console.log('remote stdout: ', stdout);
+  //   },
+  //   err: function(stderr) {
+  //     console.log('remote stderr: ', stderr)
+  //   }
+  // }).start();
+  //
+  // ssh.on('error', function(err) {
+  //   console.log('Oops, something went wrong.');
+  //   console.log(err);
+  //   ssh.end();
+  // });
+}
+
+/*****************************************
  * watcher events
  */
 watcher
   .on('change', transfer)
-  // .on('add', transfer)
-  .on('unlink', function(path) {
-    log('remove: ', path);
-  })
+  .on('add', transfer)
+  .on('unlink', remove)
   // More events.
   .on('addDir', transfer)
-  .on('unlinkDir', function(path) {
-    log('remove dir: ', path);
-  })
+  .on('unlinkDir', remove)
   .on('error', function(error) {
     log('error: ', error);
   })
   .on('ready', function() {
-    log('Initial scan complete. Ready for changes.');
+    log('Initial scan complete. Ready for changes...');
   })
   .on('raw', function(event, path, details) {
     //log('Raw event info:', event, path, details);
   });
 
+/*****************************************
+ * test with filename containing space
+ */
+// setTimeout(function() {
+//   fs.writeFile(rootpath.local + 'test folder.txt', '', function(err) {
+//     if (err) console.log(err);
+//     console.log('created file');
+//   });
+// }, 5000);
+//
+// setTimeout(function() {
+//   console.log('unlink file...');
+//   fs.unlink(rootpath.local + 'test folder.txt')
+// }, 15000);
 
 /*****************************************
  * watcher events
