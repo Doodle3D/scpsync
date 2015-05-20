@@ -19,7 +19,7 @@ var jsesc = require('jsesc');
  * vars
  */
 var rootpath = {
-  local: 'customfeeds/doodle3d-firmware/src/',
+  local: '../customfeeds/doodle3d-firmware/src/',
   remote: '/tmp/testing/usr/share/lua/wifibox/',
 }
 
