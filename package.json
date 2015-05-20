@@ -1,5 +1,5 @@
 {
-  "name": "filewatcher",
+  "name": "scpsync",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
@@ -8,8 +8,9 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node --harmony index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Doodle3D",
-  "license": "ISC"
+  "license": "MIT"
 }

@@ -1,10 +1,6 @@
+'use strict';
+
 /*****************************************
- * INSTALL:
- * npm install
- *
- * USAGE:
- * node index.js
- *
  * NOTE:
  * work in progress: https://www.npmjs.com/package/ssh-exec
  */
