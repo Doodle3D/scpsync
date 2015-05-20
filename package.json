@@ -1,0 +1,15 @@
+{
+  "name": "filewatcher",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "chokidar": "^1.0.1",
+    "scp": "0.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Doodle3D",
+  "license": "ISC"
+}
