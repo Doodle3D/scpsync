@@ -1,0 +1,4 @@
+{
+  "local": "../customfeeds/doodle3d-firmware/src/",
+  "remote": "/usr/share/lua/wifibox/"
+}
