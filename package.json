@@ -1,9 +1,10 @@
 {
   "name": "scpsync",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "dependencies": {
     "chokidar": "^1.0.1",
+    "commander": "^2.8.1",
     "jsesc": "^0.5.0",
     "scp": "0.0.3",
     "simple-ssh": "^0.8.5",
@@ -12,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node --harmony index.js",
+    "start": "node bin/scpsync",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Doodle3D",
