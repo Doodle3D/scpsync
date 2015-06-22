@@ -1,7 +1,4 @@
 {
-  "local": "../customfeeds/doodle3d-firmware/src/",
-  /*"remote": "/usr/share/lua/wifibox/",*/
-  "remote": "/tmp/usr/share/lua/wifibox/",
   "user": "root",
   "hostip": "192.168.5.1",
   "hostname": "wifibox"
