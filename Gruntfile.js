@@ -18,7 +18,8 @@ module.exports = function(grunt) {
     };
 
     var options = {
-      cmd: 'bin/scpsync',
+      cmd: 'scpsync', //global
+      // cmd: 'bin/scpsync', //local
       grunt: false,
       opts: {stdio: 'inherit'},
       args: [
