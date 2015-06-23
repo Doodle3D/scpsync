@@ -58,7 +58,7 @@ Host wifibox
 	UserKnownHostsFile=/dev/null
 ```
 
-Create an ssh key on your host machine and apply this ssh command:
+Create an ssh key on your host machine and apply this ssh command (OpenWrt example):
 ```bash
 cat ~/.ssh/id_rsa.pub | ssh wifibox 'cat >> /etc/dropbear/authorized_keys'
 ```
