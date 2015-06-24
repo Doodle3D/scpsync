@@ -5,6 +5,10 @@
   "bin": {
     "scpsync": "bin/scpsync"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Doodle3d/scpsync.git"
+  },
   "dependencies": {
     "chokidar": "^1.0.1",
     "commander": "^2.8.1",
